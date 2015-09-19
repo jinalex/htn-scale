@@ -1,4 +1,4 @@
-application: htn-scale
+application: htn-project
 version: 1
 runtime: php55
 api_version: 1
