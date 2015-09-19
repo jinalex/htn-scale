@@ -21,36 +21,6 @@
     <li class="sidebar-list">
       <a href="courts.php">My Items<span class="menu-icon fa fa-list"></span></a>
     </li>
-    <li class="sidebar-list">
-      <a href="tentative.php">Looking to Play<span class="menu-icon fa fa-tachometer"></span></a>
-    </li>
-    <li class="sidebar-title"><span>Your Events</span></li>
-    <li class="sidebar-list">
-      <a href="all.php">All Events<span class="menu-icon fa fa-tachometer"></span></a>
-    </li>
-<!--        <li class="sidebar-list">
-      <a href="upcoming.php">Upcoming Events<span class="menu-icon fa fa-tachometer"></span></a>
-    </li>
--->
-      <li class="sidebar-title"><span>Athletic Center</span></li>
-    <li class="sidebar-list">
-      <a href="booking.php">Booking Courts<span class="menu-icon fa fa-tachometer"></span></a>
-    </li>
-    <li class="sidebar-list">
-      <a href="#">This Week Schedule<span class="menu-icon fa fa-tachometer"></span></a>
-    </li>
-    <li class="sidebar-title"><span>Users</span></li>
-    <li class="sidebar-list">
-    	<a href="users.php">All Users</a>
-    </li>
-    <li class="sidebar-list">
-    	<a href="#">Recently Played With</a>
-    </li>
-      <li class="sidebar-title"><span>Groups</span></li>
-    <li class="sidebar-list">
-    	<a href="#">Not Implemented Yet</a>
-    </li>
-  </ul>
   <div class="sidebar-footer">
     <div class="col-xs-4">
       <a href="https://github.com/kuroware/UoftBaddy" target="_blank">
