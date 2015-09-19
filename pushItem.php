@@ -1,4 +1,5 @@
 <?php
+echo 'hi';
 require_once 'autoload.php';
 $sample_item = new FirebaseItem(array(
 	'item_name' => 'hihihi from cloud')
