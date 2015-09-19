@@ -7,7 +7,7 @@ class FirebaseCollection implements JsonSerializable {
 		$this->items = array();
 	}
 
-	public function push(Item $item) {
+	public function push(FirebaseItem $item_to_push) {
 		array_push($this->items, $item_to_push);
 		return true;
 	}
@@ -45,7 +45,7 @@ class FirebaseItem implements JsonSerializable {
 		$this->upc = $args['upc'];
 		$this->weight = $args['weight'];
 		$this->where_to_buy = $args['where_to_buy'];
-		$this->sale = (is_bool($args['sale'])) ? $arg['sale'] : false;
+		$this->sale = (is_bool($args['sale'])) ? $args['sale'] : false;
 		$this->item_name = $args['item_name'];
 		$this->item_image = $args['item_image'];
 	}

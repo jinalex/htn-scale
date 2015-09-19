@@ -13,9 +13,17 @@ class FirebaseService {
 
 	public static function fireConnection() {
 		if (is_null(self::$firebase_instance)) {
-			self::$firebase_instance = new \Firebase\FirebaseLib(DEFAULT_URL, DEFAULT_TOKEN);
+			self::$firebase_instance = new \Firebase\FirebaseLib(self::DEFAULT_URL, self::DEFAULT_TOKEN);
 		}
 		return self::$firebase_instance;
+	}
+
+	public static function stdClassToArray(stdClass $object) {
+		$array = array();
+		foreach ($object as $attribute=>$val) {
+			$array[$attribute] = $val;
+		}
+		return $array;
 	}
 }
 
@@ -43,6 +51,7 @@ class FirebasePuller {
 		$all_data = json_decode($fireInstance->get(FirebaseService::ROOT_PATH));
 		$firebaseStack = new FirebaseCollection();
 		foreach ($all_data as $key=>$item) {
+			$item = FirebaseService::stdClassToArray($item);
 			$item = new FirebaseItem($item);
 			$firebaseStack->push($item);
 		}
