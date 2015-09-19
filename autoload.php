@@ -1,6 +1,12 @@
 <?php
 
 spl_autoload_register(function ($class) {
+    if ($class == 'FirebaseItem') {
+        require_once 'FirebaseItems.php';
+    }
+    elseif ($class == 'FirebasePusher') {
+        require_once 'FirebaseFactory.php';
+    }
     // the package namespace
     $ns = 'Firebase';
 

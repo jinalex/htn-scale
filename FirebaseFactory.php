@@ -29,7 +29,7 @@ class FirebasePusher {
 		$writeableArray = $item->__toArray();
 
 		//Write the data
-		
+		$fireInstance->set(FirebaseService::DEFAULT_PATH . $writeableArray['item_name'], $writeableArray);
 	}
 }
 
