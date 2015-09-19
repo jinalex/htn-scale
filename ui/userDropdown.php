@@ -1,11 +1,11 @@
 <ul class="dropdown-menu dropdown-menu-right">
     <li class="dropdown-header">
-        {{data.dropdown.user.username}}
+        Project 118
     </li>
     <li class="divider"></li>
     <li class="link">
-        <a ng-href="profile.php?id={{data.dropdown.user.user_id}}">
-            Profile
+        <a ng-href="#">
+            Dashboard
         </a>
     </li>
     <li class="link">
@@ -15,12 +15,12 @@
     </li>
     <li class="link">
         <a href="all.php?tab=upcoming">
-            {{data.dropdown.fields.upcoming_confirmed_badminton_dates}} Upcoming Badminton Events
+            3 Items Need to be bought
         </a>
     </li>
     <li class="link">
         <a href="#">
-            {{data.dropdown.fields.upcoming_threads_joined}} Upcoming Threads Joined
+            98.56% on average usage this week
         </a>
     </li>
     <li class="divider"></li>

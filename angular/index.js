@@ -3,9 +3,25 @@ angular./**
 *
 * Description
 */
-module('app', [])
+module('app', ['ui.bootstrap'])
 	.config(function($provide) {
 		$provide.constant('getUserItems', 'getAllItems.php');
+		$provide.constant('MessagesSet', [
+			{
+				message_id: 1,
+				message_title: 'Amazon 15% off until end of today',
+				message_text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus tristique hendrerit ex, vitae aliquet lacus lacinia non. Nam quis tincidunt elit, eu efficitur tellus. Ut lacinia laoreet magna at vulputate. Cras aliquam eros at ligula hendrerit placerat. Sed at magna tempus dui dictum cursus ac et mauris.',
+				cssClass: 'fa fa-amazon',
+				pullClass: 'widget-icon orange pull-left'
+			},
+			{
+				message_id: 2,
+				message_title: 'Target 18% off until tomorrow',
+				message_text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus tristique hendrerit ex, vitae aliquet lacus lacinia non. Nam quis tincidunt elit, eu efficitur tellus. Ut lacinia laoreet magna at vulputate. Cras aliquam eros at ligula hendrerit placerat. Sed at magna tempus dui dictum cursus ac et mauris.',
+				cssClass: 'fa fa-dot-circle-o',
+				pullClass: 'widget-icon red pull-left'
+			}
+		]);
 	}).service('httpHandler', ['$http', function($http){
 		this.request = function(UrlToQuery, Data) {
 			return $http({
@@ -86,7 +102,9 @@ module('app', [])
                 restrict:"E"
         };
         return e
-    }).controller('controller', ['$scope', 'indexFactory', function($scope, indexFactory){
+    }).controller('controller', ['$scope', 'indexFactory', 'MessagesSet', function($scope, indexFactory, MessagesSet){
+    	$scope.data = {};
+    	$scope.data.messages = MessagesSet;
 		$scope.toggle = true;
 		
 		$scope.toggleSidebar = function() {
@@ -106,4 +124,12 @@ module('app', [])
 			})
 		}
 		$scope.getUserItems();
+
+		$scope.close = function(messageID) {
+			for (var i = 0; i < $scope.data.messages.length; i++) {
+				if ($scope.data.messages[i].message_id == messageID) {
+					$scope.data.messages.splice(i, 1);
+				}
+			}
+		}
 	}]);

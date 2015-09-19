@@ -3,7 +3,7 @@
   <ul class="sidebar">
     <li class="sidebar-main">
     <a ng-click="toggleSidebar()">
-          UoftBaddy
+          Project 118
         <span class="menu-icon glyphicon glyphicon-transfer"></span>
       </a>
     </li>
@@ -19,7 +19,7 @@
       <li class="sidebar-title"><span>Items Profile</span></li>
     </div>
     <li class="sidebar-list">
-      <a href="courts.php">My Items<span class="menu-icon fa fa-list"></span></a>
+      <a href="items.php">My Items<span class="menu-icon fa fa-list"></span></a>
     </li>
   <div class="sidebar-footer">
     <div class="col-xs-4">
