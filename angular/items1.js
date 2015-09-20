@@ -234,6 +234,7 @@ module('app', ['ui.bootstrap', 'chart.js', 'firebase'])
 							status: 'Plenty',
 							label_class: 'label label-success'
 						});
+						$scope.data.cookies = true;
 						$scope.data.dataset[0][$scope.data.dataset[0].length - 1] += 5;
 						//$scope.stopIntervalOne();
 						//deferred.resolve();

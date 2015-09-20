@@ -138,6 +138,25 @@ require_once 'autoload.php';
                                 </rd-widget-body>
                             </rd-widget>
                         </div>
+                        <div class="col-lg-6" style="margin-bottom:10px;" ng-show="data.cookies">
+                            <rd-widget>
+                                <rd-widget-body>
+                                    <div class="widget-icon brown pull-left">
+                                        <i class="fa fa-circle"></i>
+                                    </div>
+                                    <div class="title" style="display:inline-block;" tooltip="President's Choice Decadent Cookies">President's Choice ...<small style="font-size:12px;"> (2.8% left)</div>
+                                    <span class="label label-danger" style="float:right;">Almost None</span>
+                                    <div class="comment">
+                                        <span style="color:red;">
+                                            Almost None</span> - 
+                                        Buy by the end of today
+                                        <a href style="float:right;">View More <i class="fa fa-chevron-right"></i></a>
+                                        <br/><br/>
+                                        <a ng-href="http://www.amazon.com/s/ref=nb_sb_noss_2?url=search-alias%3Daps&field-keywords={{item.item_name}}"><i class="fa fa-amazon"></i> Buy Now Amazon</a>
+                                    </div>
+                                </rd-widget-body>
+                            </rd-widget>
+                        </div>
  <!--                            <div class="col-lg-12" style="margin-bottom:10px;">
                                 <rd-widget>
                                     <rd-widget-body>
