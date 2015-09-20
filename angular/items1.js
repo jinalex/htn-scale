@@ -3,7 +3,7 @@ angular./**
 *
 * Description
 */
-module('app', ['ui.bootstrap', 'chart.js'])
+module('app', ['ui.bootstrap', 'chart.js', 'firebase'])
 	.config(function($provide) {
 		$provide.constant('getUserItems', 'getAllItems.php');
 		$provide.constant('getItemByUPC', 'ItembyUPC.php');
@@ -193,7 +193,7 @@ module('app', ['ui.bootstrap', 'chart.js'])
                 restrict:"E"
         };
         return e
-    }).controller('controller', ['$scope', 'indexFactory', 'MessagesSet', '$interval', 'GraphData', 'Items', '$q', function($scope, indexFactory, MessagesSet, $interval, GraphData, Items, $q){
+    }).controller('controller', ['$scope', 'indexFactory', 'MessagesSet', '$interval', 'GraphData', 'Items', '$q', '$firebaseObject', function($scope, indexFactory, MessagesSet, $interval, GraphData, Items, $q, $firebaseObject){
     	$scope.data = {};
     	$scope.data.messages = MessagesSet;
     	$scope.data.items = Items;
@@ -203,6 +203,60 @@ module('app', ['ui.bootstrap', 'chart.js'])
 		$scope.data.dataset = GraphData.data;
 		$scope.data.labels = GraphData.labels;
 		$scope.data.series = GraphData.series;
+
+		var ref = new Firebase("https://demoitemhtn.firebaseio.com/");
+
+		$scope.currentEvent = 0;
+
+		ref.on('child-added', function(newValue, oldValue) {
+			$scope.currentEvent += 1;
+			switch ($scope.currentEvent) {
+				case 1:
+					var upc = '060383049645';
+					indexFactory.UPCDetails(upc).then(function(successResponse) {
+						console.log(successResponse);
+						$scope.data.items.push({
+							upc: successResponse.data.upc,
+							item_name: successResponse.data.item_name,
+							percent_left: 100,
+							color_code:{
+								color: '#5CB85C'
+							},
+							widget_class: 'fa fa-leaf',
+							pull_class: 'widget-icon purple pull-left',
+							status: 'Plenty',
+							label_class: 'label label-success'
+						});
+						$scope.data.dataset[0][$scope.data.dataset[0].length - 1] += 5;
+						$scope.stopIntervalOne();
+						deferred.resolve();
+					}, function(errorResponse) {
+						console.log(errorResponse);
+					});
+					break;
+				case 2:
+					break;
+				case 3:
+					for (var i = 0; i < $scope.data.items.length; i++) {
+						if ($scope.data.items[i].upc == '060383049645') {
+							$scope.data.items[i].color_code = {
+								color: '#D9534F'
+							};
+							$scope.data.items[i].label_class = 'label label-danger';
+							$scope.data.items[i].status = 'Almost None';
+							$scope.data.items[i].percent_left = 4;
+							break;
+							//$scope.destroyIntervalThree();
+						}
+					}
+					break;
+				case 4:
+					break;
+					break;
+				default:
+					break;
+			}
+		})
 		
 		$scope.toggleSidebar = function() {
 			/*
@@ -321,7 +375,7 @@ module('app', ['ui.bootstrap', 'chart.js'])
 			});
 		}
 
-		var promise = $interval(getUserItems, 3000);
+//		var promise = $interval(getUserItems, 3000);
 
 		$scope.stopIntervalOne = function() {
 			$interval.cancel(promise);
@@ -341,13 +395,18 @@ module('app', ['ui.bootstrap', 'chart.js'])
 							$scope.data.items[i].status = 'Almost None';
 							$scope.data.items[i].percent_left = 4;
 							break;
+							$scope.destroyIntervalThree();
 						}
 					}
 				});
 
 			});
 		}
-		var promise = $interval(waitForThree, 3000);
+//		var promiseThree = $interval(waitForThree, 3000);
+
+		$scope.destroyIntervalThree = function() {
+			$interval.cancel(promiseThree);
+		}
 
 
 		$scope.close = function(messageID) {
