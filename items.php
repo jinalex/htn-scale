@@ -32,7 +32,7 @@ require_once 'autoload.php';
     <script src="/bower_components/Chart.js-master/Chart.js"></script>
     <!-- Custom Scripts -->
     <script src="/bower_components/angular-chart.js/angular-chart.js"></script>
-    <script type="text/javascript" src="/angular/items.js"></script>
+    <script type="text/javascript" src="/angular/items1.js"></script>
 </head>
 <body ng-controller="controller">
     <div id="page-wrapper" ng-class="{'open': toggle}" ng-cloak>
@@ -115,7 +115,7 @@ require_once 'autoload.php';
                                 </rd-widget-body>
                             </rd-widget>
                         </div> -->
-                        <div class="col-lg-6" style="margin-bottom:10px;" ng-repeat="item in data.items">
+                        <div class="col-lg-6" style="margin-bottom:10px;" ng-repeat="item in data.items | orderBy:'percent_left'">
                             <rd-widget>
                                 <rd-widget-body>
                                     <div ng-class="item.pull_class">

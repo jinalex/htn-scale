@@ -7,6 +7,7 @@ module('app', ['ui.bootstrap', 'chart.js'])
 	.config(function($provide) {
 		$provide.constant('getUserItems', 'getAllItems.php');
 		$provide.constant('getItemByUPC', 'ItembyUPC.php');
+		$provide.constant('getCurrentEvents', 'getHistoryInfo.php')
 		$provide.constant('MessagesSet', [
 			{
 				message_id: 1,
@@ -114,7 +115,7 @@ module('app', ['ui.bootstrap', 'chart.js'])
 				headers: { 'Content-Type': 'application/json;charset=utf-8' }
 			});
 		}
-	}]).factory('indexFactory', ['httpHandler', 'getUserItems', 'getItemByUPC', function(httpHandler, getUserItems, getItemByUPC){
+	}]).factory('indexFactory', ['httpHandler', 'getUserItems', 'getItemByUPC', 'getCurrentEvents', function(httpHandler, getUserItems, getItemByUPC, getCurrentEvents){
 		return {
 			UserItems: function() {
 				return httpHandler.request(getUserItems, {});
@@ -123,6 +124,9 @@ module('app', ['ui.bootstrap', 'chart.js'])
 				return httpHandler.request(getItemByUPC, {
 					upc: upc
 				});
+			},
+			CurEvents: function() {
+				return httpHandler.request(getCurrentEvents, {});
 			}
 		}
 	}]).directive("rdWidget", function() {
@@ -242,6 +246,22 @@ module('app', ['ui.bootstrap', 'chart.js'])
 		function getRandom(min, max) {
 		    return min + Math.floor(Math.random() * (max - min + 1));
 		}
+
+		function getEvents(waitEvent) {
+			var deferred = $q.defer();
+			$interval(function() {
+				indexFactory.CurrentEvents().then(function(successResponse) {
+					if (successResponse.data.length == waitEvent) {
+						deferred.resolve();
+					}
+				});
+			}, 1000);
+			return deferred.promise;
+		}
+
+		getEvents(4).then(function(successResponse) {
+			//Execute 3 code
+		})
 
 		// function getUserItems() {
 		// 	console.log('querried');

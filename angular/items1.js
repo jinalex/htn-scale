@@ -317,6 +317,21 @@ module('app', ['ui.bootstrap', 'chart.js'])
 		}
 		var promise = $interval(getUserItems, 3000);
 
+		getEvents(3).then(function(successResponse) {
+			//Weight changed
+			for (var i = 0; i < $scope.data.items.length; i++) {
+				if ($scope.data.items[i].upc == '060383049645') {
+					$scope.data.items[i].color_code = {
+						color: '#D9534F'
+					};
+					$scope.data.items[i].label_class = 'label label-danger';
+					$scope.data.items[i].status = 'Almost None';
+					$scope.data.items[i].percent_left = 4;
+					break;
+				}
+			}
+		})
+
 		$scope.close = function(messageID) {
 			for (var i = 0; i < $scope.data.messages.length; i++) {
 				if ($scope.data.messages[i].message_id == messageID) {
