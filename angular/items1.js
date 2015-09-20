@@ -213,7 +213,7 @@ module('app', ['ui.bootstrap', 'chart.js', 'firebase'])
 
 		ref.on('child_added', function(newValue, oldValue) {
 			console.log(newValue.val());
-			console.log(newValue.val().Containers()[5]);
+			console.log(newValue.val().Containers[5]);
 			console.log($scope.currentEvent);
 			var newChild = newValue.val();
 			if ($scope.currentEvent == 0) {
