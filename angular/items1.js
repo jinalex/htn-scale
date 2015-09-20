@@ -228,8 +228,8 @@ module('app', ['ui.bootstrap', 'chart.js', 'firebase'])
 							label_class: 'label label-success'
 						});
 						$scope.data.dataset[0][$scope.data.dataset[0].length - 1] += 5;
-						$scope.stopIntervalOne();
-						deferred.resolve();
+						//$scope.stopIntervalOne();
+						//deferred.resolve();
 					}, function(errorResponse) {
 						console.log(errorResponse);
 					});
