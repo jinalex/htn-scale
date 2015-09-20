@@ -214,14 +214,14 @@ module('app', ['ui.bootstrap', 'chart.js', 'firebase'])
 		ref.on('child_added', function(newValue, oldValue) {
 			console.log($scope.currentEvent);
 			newValue = newValue.val();
-			console.log(newValue);
+			console.log(newValue.Containers[5]);
 			if ($scope.currentEvent == 0) {
 				if (newValue.Containers[5].level == 'Low') {
 					$scope.currentEvent = 1;
 				}
 			}
 			if ($scope.currentEvent == 1) {
-				console.log(newValue);
+				console.log($scope.currentEventTwo);
 				if ($scope.currentEventTwo == $scope.finalizedEventTwo) {
 					$scope.currentEvent = 3;
 				}
