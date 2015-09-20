@@ -252,11 +252,10 @@ module('app', ['ui.bootstrap', 'chart.js', 'firebase'])
 					break;
 				case 4:
 					break;
-					break;
 				default:
 					break;
 			}
-		})
+		});
 		
 		$scope.toggleSidebar = function() {
 			/*

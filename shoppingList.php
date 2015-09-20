@@ -32,6 +32,10 @@ require_once 'autoload.php';
     <script src="/bower_components/Chart.js-master/Chart.js"></script>
     <!-- Custom Scripts -->
     <script src="/bower_components/angular-chart.js/angular-chart.js"></script>
+<!-- Firebase -->
+<script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
+<!-- AngularFire -->
+<script src="https://cdn.firebase.com/libs/angularfire/1.1.2/angularfire.min.js"></script>
     <script type="text/javascript" src="/angular/shopping.js"></script>
 </head>
 <body ng-controller="controller">

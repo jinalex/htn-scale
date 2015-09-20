@@ -3,7 +3,7 @@ angular./**
 *
 * Description
 */
-module('app', ['ui.bootstrap', 'chart.js'])
+module('app', ['ui.bootstrap', 'chart.js', 'firebase'])
 	.config(function($provide) {
 		$provide.constant('getUserItems', 'getAllItems.php');
 		$provide.constant('getItemByUPC', 'ItembyUPC.php');
@@ -194,7 +194,7 @@ module('app', ['ui.bootstrap', 'chart.js'])
                 restrict:"E"
         };
         return e
-    }).controller('controller', ['$scope', 'indexFactory', 'MessagesSet', '$interval', 'GraphData', 'Items', function($scope, indexFactory, MessagesSet, $interval, GraphData, Items){
+    }).controller('controller', ['$scope', 'indexFactory', 'MessagesSet', '$interval', 'GraphData', 'Items', '$q', '$firebaseObject', function($scope, indexFactory, MessagesSet, $interval, GraphData, Items, $q, $firebaseObject){
     	$scope.data = {};
     	$scope.data.messages = MessagesSet;
     	$scope.data.items = Items;
@@ -204,6 +204,32 @@ module('app', ['ui.bootstrap', 'chart.js'])
 		$scope.data.dataset = GraphData.data;
 		$scope.data.labels = GraphData.labels;
 		$scope.data.series = GraphData.series;
+
+		var ref = new Firebase("https://demoitemhtn.firebaseio.com/");
+
+		$scope.currentEvent = 0;
+
+		ref.on('child-added', function(newValue, oldValue) {
+			$scope.currentEvent += 1;
+			switch ($scope.currentEvent) {
+				case 1:
+					break;
+				case 2:
+					break;
+				case 3:
+					break;
+				case 4:
+					$scope.data.items.push({
+						item_name: 'Chocolate Chip Cookies',
+						label_class: 'label label-warning',
+						percent_left: 2.8,
+						status: 'Almost None'
+					});
+					break;
+				default:
+					break;
+			}
+		});
 		
 		$scope.toggleSidebar = function() {
 			/*
@@ -247,6 +273,8 @@ module('app', ['ui.bootstrap', 'chart.js'])
 		    return min + Math.floor(Math.random() * (max - min + 1));
 		}
 
+
+
 		function getEvents(waitEvent) {
 			var deferred = $q.defer();
 			$interval(function() {
@@ -258,10 +286,6 @@ module('app', ['ui.bootstrap', 'chart.js'])
 			}, 1000);
 			return deferred.promise;
 		}
-
-		getEvents(4).then(function(successResponse) {
-			//Execute 3 code
-		})
 
 		// function getUserItems() {
 		// 	console.log('querried');
