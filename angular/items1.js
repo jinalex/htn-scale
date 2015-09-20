@@ -208,12 +208,15 @@ module('app', ['ui.bootstrap', 'chart.js', 'firebase'])
 		var ref = new Firebase("https://demoitemhtn.firebaseio.com/");
 
 		$scope.currentEvent = 0;
+		$scope.currentEventTwo = [];
+		$scope.finalizedEventTwo = ['Empty', 'Full']
 
 		ref.on('child_added', function(newValue, oldValue) {
-			$scope.currentEvent += 1;
+			console.log(newValue);
 			console.log($scope.currentEvent);
-			switch ($scope.currentEvent) {
-				case 1:
+			if ($scope.currentEvent == 0) {
+				if (newValue.Containers[5].level == 'High') {
+					$scope.currentEvent = 1;
 					var upc = '060383049645';
 					indexFactory.UPCDetails(upc).then(function(successResponse) {
 						console.log(successResponse);
@@ -235,28 +238,83 @@ module('app', ['ui.bootstrap', 'chart.js', 'firebase'])
 					}, function(errorResponse) {
 						console.log(errorResponse);
 					});
-					break;
-				case 2:
-					break;
-				case 3:
-					for (var i = 0; i < $scope.data.items.length; i++) {
-						if ($scope.data.items[i].upc == '060383049645') {
-							$scope.data.items[i].color_code = {
-								color: '#D9534F'
-							};
-							$scope.data.items[i].label_class = 'label label-danger';
-							$scope.data.items[i].status = 'Almost None';
-							$scope.data.items[i].percent_left = 4;
-							break;
-							//$scope.destroyIntervalThree();
-						}
-					}
-					break;
-				case 4:
-					break;
-				default:
-					break;
+				}
 			}
+			if ($scope.currentEvent == 1) {
+				console.log(newValue);
+				if ($scope.currentEventTwo == $scope.finalizedEventTwo) {
+					$scope.currentEvent = 3;
+				}
+				else {
+					if (newValue.Containers[5].level == 'Empty') {
+						$scope.currentEventTwo.push('Empty');
+					}
+					else if (newValue.Containers[5].level == 'Full') {
+						$scope.currentEventTwo.push('Full');
+					}
+				}
+			}
+			if ($scope.currentEvent == 3) {
+				for (var i = 0; i < $scope.data.items.length; i++) {
+					if ($scope.data.items[i].upc == '060383049645') {
+						$scope.data.items[i].color_code = {
+							color: '#D9534F'
+						};
+						$scope.data.items[i].label_class = 'label label-danger';
+						$scope.data.items[i].status = 'Almost None';
+						$scope.data.items[i].percent_left = 4;
+						break;
+						//$scope.destroyIntervalThree();
+					}
+				}
+			}
+
+			// console.log($scope.currentEvent);
+			// switch ($scope.currentEvent) {
+			// 	case 1:
+			// 		var upc = '060383049645';
+			// 		indexFactory.UPCDetails(upc).then(function(successResponse) {
+			// 			console.log(successResponse);
+			// 			$scope.data.items.push({
+			// 				upc: '060383049645',
+			// 				item_name: successResponse.data.item_name,
+			// 				percent_left: 100,
+			// 				color_code:{
+			// 					color: '#5CB85C'
+			// 				},
+			// 				widget_class: 'fa fa-leaf',
+			// 				pull_class: 'widget-icon purple pull-left',
+			// 				status: 'Plenty',
+			// 				label_class: 'label label-success'
+			// 			});
+			// 			$scope.data.dataset[0][$scope.data.dataset[0].length - 1] += 5;
+			// 			//$scope.stopIntervalOne();
+			// 			//deferred.resolve();
+			// 		}, function(errorResponse) {
+			// 			console.log(errorResponse);
+			// 		});
+			// 		break;
+			// 	case 2:
+			// 		break;
+			// 	case 3:
+			// 		for (var i = 0; i < $scope.data.items.length; i++) {
+			// 			if ($scope.data.items[i].upc == '060383049645') {
+			// 				$scope.data.items[i].color_code = {
+			// 					color: '#D9534F'
+			// 				};
+			// 				$scope.data.items[i].label_class = 'label label-danger';
+			// 				$scope.data.items[i].status = 'Almost None';
+			// 				$scope.data.items[i].percent_left = 4;
+			// 				break;
+			// 				//$scope.destroyIntervalThree();
+			// 			}
+			// 		}
+			// 		break;
+			// 	case 4:
+			// 		break;
+			// 	default:
+			// 		break;
+			// }
 		});
 		
 		$scope.toggleSidebar = function() {
