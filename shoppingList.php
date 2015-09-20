@@ -32,7 +32,7 @@ require_once 'autoload.php';
     <script src="/hackthenorth/bower_components/Chart.js-master/Chart.js"></script>
     <!-- Custom Scripts -->
     <script src="/hackthenorth/bower_components/angular-chart.js/angular-chart.js"></script>
-    <script type="text/javascript" src="/hackthenorth/angular/items.js"></script>
+    <script type="text/javascript" src="/hackthenorth/angular/shopping.js"></script>
 </head>
 <body ng-controller="controller">
     <div id="page-wrapper" ng-class="{'open': toggle}" ng-cloak>
@@ -80,21 +80,9 @@ require_once 'autoload.php';
                 <!-- End Header Bar -->
                 <div ui-view>
                     <div class="row">
-                        <div class="col-lg-12">
-                            <rd-widget>
-                                <rd-widget-header title="Basket of Goods">
-                                </rd-widget-header>
-                                <rd-widget-body> 
-                                    <canvas id="line" class="chart chart-line" chart-data="data.dataset"
-                                    chart-labels="data.labels" chart-legend="true" chart-series="data.series"
-                                    chart-click="onClick" height="15" width="100" style="width:150px">
-                                    </canvas> 
-                                </rd-widget-body>
-                            </rd-widget>
-                        </div>
                         <div class="col-lg-12" style="margin-bottom:10px;">
                             <rd-widget>
-                                <rd-widget-header title="Your Tracked Items ({{data.items.length}})">
+                                <rd-widget-header title="My Shopping List ({{data.items.length}})">
                                 </rd-widget-header style="margin-bottom:0px;">
                             </rd-widget>
                         </div>

@@ -124,7 +124,7 @@ module('app', ['ui.bootstrap', 'chart.js'])
 					upc: upc
 				});
 			},
-			CurEvents: function() {
+			CurrentEvents: function() {
 				return httpHandler.request(getCurrentEvents, {});
 			}
 		}
@@ -193,7 +193,7 @@ module('app', ['ui.bootstrap', 'chart.js'])
                 restrict:"E"
         };
         return e
-    }).controller('controller', ['$scope', 'indexFactory', 'MessagesSet', '$interval', 'GraphData', 'Items', function($scope, indexFactory, MessagesSet, $interval, GraphData, Items){
+    }).controller('controller', ['$scope', 'indexFactory', 'MessagesSet', '$interval', 'GraphData', 'Items', '$q', function($scope, indexFactory, MessagesSet, $interval, GraphData, Items, $q){
     	$scope.data = {};
     	$scope.data.messages = MessagesSet;
     	$scope.data.items = Items;
@@ -246,6 +246,18 @@ module('app', ['ui.bootstrap', 'chart.js'])
 		    return min + Math.floor(Math.random() * (max - min + 1));
 		}
 
+		function getEvents(waitEvent) {
+			var deferred = $q.defer();
+			$interval(function() {
+				indexFactory.CurrentEvents().then(function(successResponse) {
+					if (successResponse.data.length == waitEvent) {
+						deferred.resolve();
+					}
+				});
+			}, 1000);
+			return deferred.promise;
+		}
+
 		function getUserItems() {
 			console.log('querried');
 			indexFactory.UserItems().then(function(successResponse) {
@@ -275,27 +287,30 @@ module('app', ['ui.bootstrap', 'chart.js'])
 
 				console.log(objectsToAdd);
 
-				for (var i = 0; i < objectsToAdd.length; i++) {
-					console.log(objectsToAdd[i]);
-					indexFactory.UPCDetails(objectsToAdd[i]).then(function(successResponse) {
-						console.log(successResponse);
-						$scope.data.items.push({
-							upc: successResponse.data.upc,
-							item_name: successResponse.data.item_name,
-							percent_left: 100,
-							color_code:{
-								color: '#5CB85C'
-							},
-							widget_class: 'fa fa-leaf',
-							pull_class: 'widget-icon purple pull-left',
-							status: 'Plenty',
-							label_class: 'label label-success'
-						});
-						$scope.data.dataset[0][$scope.data.dataset[0].length - 1] += 5;
-					}, function(errorResponse) {
-						console.log(errorResponse);
-					})
-				}
+				getEvents(1).then(function(successResponse){
+					console.log('got 1');
+					for (var i = 0; i < objectsToAdd.length; i++) {
+						console.log(objectsToAdd[i]);
+						indexFactory.UPCDetails(objectsToAdd[i]).then(function(successResponse) {
+							console.log(successResponse);
+							$scope.data.items.push({
+								upc: successResponse.data.upc,
+								item_name: successResponse.data.item_name,
+								percent_left: 100,
+								color_code:{
+									color: '#5CB85C'
+								},
+								widget_class: 'fa fa-leaf',
+								pull_class: 'widget-icon purple pull-left',
+								status: 'Plenty',
+								label_class: 'label label-success'
+							});
+							$scope.data.dataset[0][$scope.data.dataset[0].length - 1] += 5;
+						}, function(errorResponse) {
+							console.log(errorResponse);
+						})
+					}
+				});
 			}, function(errorResponse) {
 				console.log(errorResponse);
 			});

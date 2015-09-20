@@ -7,7 +7,6 @@ module('app', ['ui.bootstrap', 'chart.js'])
 	.config(function($provide) {
 		$provide.constant('getUserItems', 'getAllItems.php');
 		$provide.constant('getItemByUPC', 'ItembyUPC.php');
-		$provide.constant('getCurrentEvents', 'getHistoryInfo.php');
 		$provide.constant('MessagesSet', [
 			{
 				message_id: 1,
@@ -64,7 +63,8 @@ module('app', ['ui.bootstrap', 'chart.js'])
        weight: null,
        status: 'Low',
        message: 'Buy within the next 3 days'
-   },
+    },
+   // },
    {
        item_name: 'Oranges',
        pull_class: 'widget-icon blue pull-left',
@@ -77,33 +77,33 @@ module('app', ['ui.bootstrap', 'chart.js'])
        weight: null,
        status: 'Low',
        message: 'Buy within the next 2 days'
-   },
-   {
-       item_name: 'Soft Drinks',
-       pull_class: 'widget-icon green pull-left',
-       widget_class: 'fa fa-glass',
-       percent_left: '56.8',
-       label_class: 'label label-info',
-       color_code: {
-       	color: '#428BCA'
-       },
-       weight: null,
-       status: 'About Half',
-       message: 'Buy in a week'
-   },
-   {
-       item_name: 'Detergent',
-       pull_class: 'widget-icon orange pull-left',
-       widget_class: 'fa fa-tint',
-       percent_left: '91.2',
-       label_class: 'label label-success',
-       color_code: {
-       	color: '#5CB85C'
-       },
-       weight: null,
-       status: 'Plenty',
-       message: 'Buy in a couple of months'
-   },
+   }
+   // {
+   //     item_name: 'Soft Drinks',
+   //     pull_class: 'widget-icon green pull-left',
+   //     widget_class: 'fa fa-glass',
+   //     percent_left: '56.8',
+   //     label_class: 'label label-info',
+   //     color_code: {
+   //     	color: '#428BCA'
+   //     },
+   //     weight: null,
+   //     status: 'About Half',
+   //     message: 'Buy in a week'
+   // },
+   // {
+   //     item_name: 'Detergent',
+   //     pull_class: 'widget-icon orange pull-left',
+   //     widget_class: 'fa fa-tint',
+   //     percent_left: '91.2',
+   //     label_class: 'label label-success',
+   //     color_code: {
+   //     	color: '#5CB85C'
+   //     },
+   //     weight: null,
+   //     status: 'Plenty',
+   //     message: 'Buy in a couple of months'
+   // },
 ]);
 	}).service('httpHandler', ['$http', function($http){
 		this.request = function(UrlToQuery, Data) {
@@ -114,7 +114,7 @@ module('app', ['ui.bootstrap', 'chart.js'])
 				headers: { 'Content-Type': 'application/json;charset=utf-8' }
 			});
 		}
-	}]).factory('indexFactory', ['httpHandler', 'getUserItems', 'getItemByUPC', 'getCurrentEvents', function(httpHandler, getUserItems, getItemByUPC, getCurrentEvents){
+	}]).factory('indexFactory', ['httpHandler', 'getUserItems', 'getItemByUPC', function(httpHandler, getUserItems, getItemByUPC){
 		return {
 			UserItems: function() {
 				return httpHandler.request(getUserItems, {});
@@ -123,9 +123,6 @@ module('app', ['ui.bootstrap', 'chart.js'])
 				return httpHandler.request(getItemByUPC, {
 					upc: upc
 				});
-			},
-			CurEvents: function() {
-				return httpHandler.request(getCurrentEvents, {});
 			}
 		}
 	}]).directive("rdWidget", function() {
@@ -246,61 +243,59 @@ module('app', ['ui.bootstrap', 'chart.js'])
 		    return min + Math.floor(Math.random() * (max - min + 1));
 		}
 
-		function getUserItems() {
-			console.log('querried');
-			indexFactory.UserItems().then(function(successResponse) {
-				console.log(successResponse);
-				//First we need to get all the unique items
-				var objectArray = {};
-				for (var i = 0; i < successResponse.data.length; i++) {
-					objectArray[successResponse.data[i].upc] = '';
-				}
-				console.log(objectArray);
-				var objectsToAdd = [];
+		// function getUserItems() {
+		// 	console.log('querried');
+		// 	indexFactory.UserItems().then(function(successResponse) {
+		// 		console.log(successResponse);
+		// 		//First we need to get all the unique items
+		// 		var objectArray = {};
+		// 		for (var i = 0; i < successResponse.data.length; i++) {
+		// 			objectArray[successResponse.data[i].upc] = '';
+		// 		}
+		// 		console.log(objectArray);
+		// 		var objectsToAdd = [];
 
-				function inItems(upc_id) {
-					for (var i = 0; i < $scope.data.items.length; i++) {
-						if ($scope.data.items[i].upc == upc_id) {
-							return true;
-						}
-					}
-					return false;
-				}
+		// 		function inItems(upc_id) {
+		// 			for (var i = 0; i < $scope.data.items.length; i++) {
+		// 				if ($scope.data.items[i].upc == upc_id) {
+		// 					return true;
+		// 				}
+		// 			}
+		// 			return false;
+		// 		}
 
-				angular.forEach(objectArray, function(value, key) {
-					if (!inItems(key)) {
-						this.push(key);
-					}
-				}, objectsToAdd);
+		// 		angular.forEach(objectArray, function(value, key) {
+		// 			if (!inItems(key)) {
+		// 				this.push(key);
+		// 			}
+		// 		}, objectsToAdd);
 
-				console.log(objectsToAdd);
+		// 		console.log(objectsToAdd);
 
-				for (var i = 0; i < objectsToAdd.length; i++) {
-					console.log(objectsToAdd[i]);
-					indexFactory.UPCDetails(objectsToAdd[i]).then(function(successResponse) {
-						console.log(successResponse);
-						$scope.data.items.push({
-							upc: successResponse.data.upc,
-							item_name: successResponse.data.item_name,
-							percent_left: 100,
-							color_code:{
-								color: '#5CB85C'
-							},
-							widget_class: 'fa fa-leaf',
-							pull_class: 'widget-icon purple pull-left',
-							status: 'Plenty',
-							label_class: 'label label-success'
-						});
-						$scope.data.dataset[0][$scope.data.dataset[0].length - 1] += 5;
-					}, function(errorResponse) {
-						console.log(errorResponse);
-					})
-				}
-			}, function(errorResponse) {
-				console.log(errorResponse);
-			});
-		}
-		var promise = $interval(getUserItems, 3000);
+		// 		for (var i = 0; i < objectsToAdd.length; i++) {
+		// 			console.log(objectsToAdd[i]);
+		// 			indexFactory.UPCDetails(objectsToAdd[i]).then(function(successResponse) {
+		// 				console.log(successResponse);
+		// 				$scope.data.items.push({
+		// 					upc: successResponse.data.upc,
+		// 					item_name: successResponse.data.item_name,
+		// 					percent_left: 100,
+		// 					color:{
+		// 						color_code: '#5CB85C'
+		// 					},
+		// 					widget_class: 'fa fa-leaf',
+		// 					pull_class: 'widget-icon purple pull-left'
+		// 				});
+		// 				$scope.data.dataset[0][$scope.data.dataset[0].length - 1] += 5;
+		// 			}, function(errorResponse) {
+		// 				console.log(errorResponse);
+		// 			})
+		// 		}
+		// 	}, function(errorResponse) {
+		// 		console.log(errorResponse);
+		// 	});
+		// }
+		// var promise = $interval(getUserItems, 3000);
 
 		$scope.close = function(messageID) {
 			for (var i = 0; i < $scope.data.messages.length; i++) {

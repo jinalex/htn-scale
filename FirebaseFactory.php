@@ -28,6 +28,30 @@ class FirebaseService {
 }
 
 
+class FirebaseHistoryService {
+	const DEFAULT_URL = 'https://demoitemhtn.firebaseio.com/';
+	const DEFAULT_TOKEN = 'WMeplXbdHuYfpgVgyZ8RQRu8iTdAkaGbu5MA1IWm';
+	const DEFAULT_PATH = '/';
+	const ROOT_PATH = '/';
+
+	public static $firebase_instance = null; //To avoid connection pooling
+
+	public static function fireConnection() {
+		if (is_null(self::$firebase_instance)) {
+			self::$firebase_instance = new \Firebase\FirebaseLib(self::DEFAULT_URL, self::DEFAULT_TOKEN);
+		}
+		return self::$firebase_instance;
+	}
+
+	public static function stdClassToArray(stdClass $object) {
+		$array = array();
+		foreach ($object as $attribute=>$val) {
+			$array[$attribute] = $val;
+		}
+		return $array;
+	}
+}
+
 class FirebasePusher {
 	/*
 	All helper services related to pushing items to the firebase server
@@ -65,5 +89,17 @@ class FirebasePuller {
 			}
 		}
 		return $firebaseStack;
+	}
+
+	public static function pull_history() {
+		$fireInstance = FirebaseHistoryService::fireConnection();;
+		$all_data = json_decode($fireInstance->get(FirebaseService::ROOT_PATH));
+		$return = array();
+		$x = 1;
+		foreach ($all_data as $attribute=>$val) {
+			array_push($return, $x);
+			$x++;
+		}
+		return $return;
 	}
 }

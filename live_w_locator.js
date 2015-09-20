@@ -50,6 +50,7 @@ $(function() {
                 $ul = $("#result_strip ul.collector");
 
             shouldContinue = true;
+            var uniqueID = 1000;
 
             results.forEach(function loop (result) {
                 // if (loop.stop) {
@@ -62,8 +63,11 @@ $(function() {
                     $li.find("h4.code").html(result.codeResult.code + " (" + result.codeResult.format + ")");
                     var myFirebaseRef = new Firebase("https://crackling-torch-9164.firebaseio.com/");
                     myFirebaseRef.push({
-                        'upc': result.codeResult.code
+                        'upc': result.codeResult.code,
+                        'unique_id': uniqueID,
+                        name: 'Cookies'
                     });
+                    uniqueID = null;
                     // loop.stop = true;
                     $ul.prepend($li);
                 //}

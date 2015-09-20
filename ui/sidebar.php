@@ -30,6 +30,9 @@
     <li class="sidebar-list">
       <a href="items.php">My Items<span class="menu-icon fa fa-list"></span></a>
     </li>
+    <li class="sidebar-list">
+      <a href="shoppingList.php">My Shopping List<span class="menu-icon fa fa-shopping-cart"></span></a>
+    </li>
   <div class="sidebar-footer">
     <div class="col-xs-4">
       <a href="https://github.com/kuroware/UoftBaddy" target="_blank">

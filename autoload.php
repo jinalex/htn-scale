@@ -4,7 +4,7 @@ spl_autoload_register(function ($class) {
     if (($class == 'FirebaseItem') || ($class == 'FirebaseCollection')) {
         require_once 'FirebaseItems.php';
     }
-    elseif (($class == 'FirebasePusher') || ($class == 'FirebasePuller')) {
+    elseif (($class == 'FirebasePusher') || ($class == 'FirebasePuller') || ($class == 'FirebaseHistoryService')) {
         require_once 'FirebaseFactory.php';
     }
     elseif ($class == 'Renderer') {
