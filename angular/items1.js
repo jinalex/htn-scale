@@ -300,18 +300,18 @@ module('app', ['ui.bootstrap', 'chart.js', 'firebase'])
 		    return min + Math.floor(Math.random() * (max - min + 1));
 		}
 
-		function getEvents(waitEvent) {
-			var deferred = $q.defer();
-			console.log('waiting for ' + waitEvent);
-			$interval(function() {
-				indexFactory.CurrentEvents().then(function(successResponse) {
-					if (successResponse.data.length == waitEvent) {
-						deferred.resolve();
-					}
-				});
-			}, 1000);
-			return deferred.promise;
-		}
+		// function getEvents(waitEvent) {
+		// 	var deferred = $q.defer();
+		// 	console.log('waiting for ' + waitEvent);
+		// 	$interval(function() {
+		// 		indexFactory.CurrentEvents().then(function(successResponse) {
+		// 			if (successResponse.data.length == waitEvent) {
+		// 				deferred.resolve();
+		// 			}
+		// 		});
+		// 	}, 1000);
+		// 	return deferred.promise;
+		// }
 
 		function getUserItems() {
 			console.log('querried');
@@ -377,36 +377,36 @@ module('app', ['ui.bootstrap', 'chart.js', 'firebase'])
 
 //		var promise = $interval(getUserItems, 3000);
 
-		$scope.stopIntervalOne = function() {
-			$interval.cancel(promise);
-		}
+		// $scope.stopIntervalOne = function() {
+		// 	$interval.cancel(promise);
+		// }
 
-		function waitForThree() {
-			getEvents(3).then(function(successResponse) {
-				//Weight changed
-				console.log('got');
-				$scope.eventOnePromise.then(function(successResponse) {
-					for (var i = 0; i < $scope.data.items.length; i++) {
-						if ($scope.data.items[i].upc == '060383049645') {
-							$scope.data.items[i].color_code = {
-								color: '#D9534F'
-							};
-							$scope.data.items[i].label_class = 'label label-danger';
-							$scope.data.items[i].status = 'Almost None';
-							$scope.data.items[i].percent_left = 4;
-							break;
-							$scope.destroyIntervalThree();
-						}
-					}
-				});
+// 		function waitForThree() {
+// 			getEvents(3).then(function(successResponse) {
+// 				//Weight changed
+// 				console.log('got');
+// 				$scope.eventOnePromise.then(function(successResponse) {
+// 					for (var i = 0; i < $scope.data.items.length; i++) {
+// 						if ($scope.data.items[i].upc == '060383049645') {
+// 							$scope.data.items[i].color_code = {
+// 								color: '#D9534F'
+// 							};
+// 							$scope.data.items[i].label_class = 'label label-danger';
+// 							$scope.data.items[i].status = 'Almost None';
+// 							$scope.data.items[i].percent_left = 4;
+// 							break;
+// 							$scope.destroyIntervalThree();
+// 						}
+// 					}
+// 				});
 
-			});
-		}
-//		var promiseThree = $interval(waitForThree, 3000);
+// 			});
+// 		}
+// //		var promiseThree = $interval(waitForThree, 3000);
 
-		$scope.destroyIntervalThree = function() {
-			$interval.cancel(promiseThree);
-		}
+// 		$scope.destroyIntervalThree = function() {
+// 			$interval.cancel(promiseThree);
+// 		}
 
 
 		$scope.close = function(messageID) {
