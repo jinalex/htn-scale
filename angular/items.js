@@ -50,13 +50,14 @@ module('app', ['ui.bootstrap', 'chart.js'])
 	   		color: '#D9534F'
 	   	},
 	   	status: 'Almost None',
-	   	message: 'Buy by end of today'
+	   	message: 'Buy by end of today',
+	   	percent: 3.2
    },
    {
        item_name: 'Milk',
        pull_class: 'widget-icon blue pull-left',
        widget_class: 'fa fa-shopping-cart',
-       percent_left: '8.5',
+       percent_left: 8.5,
        label_class: 'label label-warning',
        color_code: {
        	color: '#F0AD4E'
@@ -69,7 +70,7 @@ module('app', ['ui.bootstrap', 'chart.js'])
        item_name: 'Oranges',
        pull_class: 'widget-icon blue pull-left',
        widget_class: 'fa fa-shopping-cart',
-       percent_left: '16.8',
+       percent_left: 16.8,
        label_class: 'label label-warning',
        color_code: {
        	color: '#F0AD4E'
@@ -82,7 +83,7 @@ module('app', ['ui.bootstrap', 'chart.js'])
        item_name: 'Soft Drinks',
        pull_class: 'widget-icon green pull-left',
        widget_class: 'fa fa-glass',
-       percent_left: '56.8',
+       percent_left: 56.8,
        label_class: 'label label-info',
        color_code: {
        	color: '#428BCA'
@@ -95,7 +96,7 @@ module('app', ['ui.bootstrap', 'chart.js'])
        item_name: 'Detergent',
        pull_class: 'widget-icon orange pull-left',
        widget_class: 'fa fa-tint',
-       percent_left: '91.2',
+       percent_left: 91.2,
        label_class: 'label label-success',
        color_code: {
        	color: '#5CB85C'

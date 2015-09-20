@@ -119,7 +119,7 @@ require_once 'autoload.php';
                                 </rd-widget-body>
                             </rd-widget>
                         </div> -->
-                        <div class="col-lg-6" style="margin-bottom:10px;" ng-repeat="item in data.items | orderBy:'-percent_left'">
+                        <div class="col-lg-6" style="margin-bottom:10px;" ng-repeat="item in data.items | orderBy:'percent_left'">
                             <rd-widget>
                                 <rd-widget-body>
                                     <div ng-class="item.pull_class">
