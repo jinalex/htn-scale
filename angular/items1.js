@@ -50,7 +50,8 @@ module('app', ['ui.bootstrap', 'chart.js', 'firebase'])
 	   		color: '#D9534F'
 	   	},
 	   	status: 'Almost None',
-	   	message: 'Buy by end of today'
+	   	message: 'Buy by end of today',
+	   	percent_left: 1.8
    },
    {
        item_name: 'Milk',
