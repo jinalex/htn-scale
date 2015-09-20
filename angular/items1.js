@@ -289,7 +289,7 @@ module('app', ['ui.bootstrap', 'chart.js'])
 				console.log(objectsToAdd);
 
 				$scope.eventOnePromise = getEvents(1).then(function(successResponse){
-					var $q.defer();
+					var deferred = $q.defer();
 					console.log('got 1');
 					for (var i = 0; i < objectsToAdd.length; i++) {
 						console.log(objectsToAdd[i]);
