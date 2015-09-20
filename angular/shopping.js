@@ -209,14 +209,14 @@ module('app', ['ui.bootstrap', 'chart.js', 'firebase'])
 
 		$scope.currentEvent = 0;
 		$scope.currentEventTwo = [];
-		$scope.finalizedEventTwo = ['Empty', 'Full'];
+		$scope.finalizedEventTwo = ['Empty', 'Low'];
 
 		ref.on('child_added', function(newValue, oldValue) {
 			console.log($scope.currentEvent);
 			newValue = newValue.val();
 			console.log(newValue);
 			if ($scope.currentEvent == 0) {
-				if (newValue.Containers[5].level == 'Full') {
+				if (newValue.Containers[5].level == 'Low') {
 					$scope.currentEvent = 1;
 				}
 			}
@@ -229,8 +229,8 @@ module('app', ['ui.bootstrap', 'chart.js', 'firebase'])
 					if (newValue.Containers[5].level == 'Empty') {
 						$scope.currentEventTwo.push('Empty');
 					}
-					else if (newValue.Containers[5].level == 'Full') {
-						$scope.currentEventTwo.push('Full');
+					else if (newValue.Containers[5].level == 'Low') {
+						$scope.currentEventTwo.push('Low');
 					}
 				}
 			}
