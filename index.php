@@ -10,17 +10,17 @@ require_once 'autoload.php';
     <title>Item Tracker</title>
     <!-- STYLES -->
     <!-- build:css lib/css/main.min.css -->
-    <link rel="stylesheet" type="text/css" href="/hackthenorth/bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="/hackthenorth/bower_components/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="/hackthenorth/bower_components/rdash-ui/dist/css/rdash.min.css">
-    <link rel="stylesheet" type="text/css" href="/hackthenorth/css/index.css">
+    <link rel="stylesheet" type="text/css" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/bower_components/rdash-ui/dist/css/rdash.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
     <!-- endbuild -->
     <!-- SCRIPTS -->
     <!-- build:js lib/js/main.min.js -->
-    <script type="text/javascript" src="/hackthenorth/bower_components/angular/angular.min.js"></script>
-    <script type="text/javascript" src="/hackthenorth/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-    <script type="text/javascript" src="/hackthenorth/bower_components/angular-cookies/angular-cookies.min.js"></script>
-    <script type="text/javascript" src="/hackthenorth/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script type="text/javascript" src="/bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script type="text/javascript" src="/bower_components/angular-cookies/angular-cookies.min.js"></script>
+    <script type="text/javascript" src="/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
     <!-- endbuild -->
     <link rel="stylesheet" href="/hackthenorth/bower_components/fullcalendar/dist/fullcalendar.css"/>
     <!-- Custom Fonts -->
