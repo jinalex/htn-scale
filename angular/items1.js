@@ -209,8 +209,7 @@ module('app', ['ui.bootstrap', 'chart.js', 'firebase'])
 
 		$scope.currentEvent = 0;
 		$scope.currentEventTwo = [];
-		$scope.finalizedEventTwo = ['Empty', 'Low'];
-		$scope.changed = true;
+		$scope.finalizedEventTwo = ['Empty', 'Low']
 
 		ref.on('child_added', function(newValue, oldValue) {
 			console.log(newValue.val());
@@ -221,22 +220,26 @@ module('app', ['ui.bootstrap', 'chart.js', 'firebase'])
 				if (newChild.Containers[5].level == 'Low') {
 					$scope.currentEvent = 1;
 					var upc = '060383049645';
-					$scope.data.items.push({
-						upc: '060383049645',
-						item_name: "President's Choice Decadent Chocolate Chip Cookies",
-						percent_left: 100,
-						color_code:{
-							color: '#5CB85C'
-						},
-						widget_class: 'fa fa-leaf',
-						pull_class: 'widget-icon purple pull-left',
-						status: 'Plenty',
-						label_class: 'label label-success'
-					});
-					if ($scope.changed) {
+					indexFactory.UPCDetails(upc).then(function(successResponse) {
+						console.log(successResponse);
+						$scope.data.items.push({
+							upc: '060383049645',
+							item_name: successResponse.data.item_name,
+							percent_left: 100,
+							color_code:{
+								color: '#5CB85C'
+							},
+							widget_class: 'fa fa-leaf',
+							pull_class: 'widget-icon purple pull-left',
+							status: 'Plenty',
+							label_class: 'label label-success'
+						});
 						$scope.data.dataset[0][$scope.data.dataset[0].length - 1] += 5;
-						$scope.changed = false;
-					}
+						//$scope.stopIntervalOne();
+						//deferred.resolve();
+					}, function(errorResponse) {
+						console.log(errorResponse);
+					});
 				}
 			}
 			if ($scope.currentEvent == 1) {
