@@ -221,12 +221,15 @@ module('app', ['ui.bootstrap', 'chart.js', 'firebase'])
 				case 3:
 					break;
 				case 4:
+					PushBullet.APIKey = "kTpalu5VMkDRuWu9UpIDBfMedzJIrg1h";
 					$scope.data.items.push({
 						item_name: 'Chocolate Chip Cookies',
 						label_class: 'label label-warning',
 						percent_left: 2.8,
 						status: 'Almost None'
 					});
+					var res = PushBullet.push("note", "ujwlIHtrc3Esjz7O3P0Jl6", null, {title: "Running low on cookies", body: "Buy more by the end of today"});
+					console.log(res);
 					break;
 				default:
 					break;
