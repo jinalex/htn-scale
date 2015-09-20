@@ -54,6 +54,8 @@ $(function() {
 
                 $li.find("img").attr("src", result.frame);
                 $li.find("h4.code").html(result.codeResult.code + " (" + result.codeResult.format + ")");
+                console.log(result.codeResult.format);
+
                 $ul.prepend($li);
             });
         },

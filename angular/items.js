@@ -6,6 +6,7 @@ angular./**
 module('app', ['ui.bootstrap', 'chart.js'])
 	.config(function($provide) {
 		$provide.constant('getUserItems', 'getAllItems.php');
+		$provide.constant('getItemByUPC', 'ItembyUPC.php');
 		$provide.constant('MessagesSet', [
 			{
 				message_id: 1,
@@ -26,6 +27,72 @@ module('app', ['ui.bootstrap', 'chart.js'])
 			'labels': ['September 12', 'September 13', 'September 14', 'September 15', 'September 16', 'September 17', 'September 18', 'September 19']
 			}
 		);
+		$provide.value('Items', [
+   // {
+   //     item_name: 'Advil',
+   //     pull_class: 'widget-icon red pull-left',
+   //     widget_class: 'fa fa-plus-square',
+   //     percent_left: '2.3',
+   //     label_class: 'label label-danger',
+   //     color_code: {
+   //     	color: '#D95349'
+   //     },
+   //     status: 'Almost None',
+   //     message: 'Buy by end of today'
+   // },
+   {
+       item_name: 'Milk',
+       pull_class: 'widget-icon blue pull-left',
+       widget_class: 'fa fa-shopping-cart',
+       percent_left: '8.5',
+       label_class: 'label label-warning',
+       color_code: {
+       	color: '#F0AD4E'
+       },
+       weight: null,
+       status: 'Low',
+       message: 'Buy within the next 3 days'
+   },
+   {
+       item_name: 'Oranges',
+       pull_class: 'widget-icon blue pull-left',
+       widget_class: 'fa fa-shopping-cart',
+       percent_left: '16.8',
+       label_class: 'label label-warning',
+       color_code: {
+       	color: '#F0AD4E'
+       },
+       weight: null,
+       status: 'Low',
+       message: 'Buy within the next 2 days'
+   },
+   {
+       item_name: 'Soft Drinks',
+       pull_class: 'widget-icon green pull-left',
+       widget_class: 'fa fa-glass',
+       percent_left: '56.8',
+       label_class: 'label label-info',
+       color_code: {
+       	color: '#428BCA'
+       },
+       weight: null,
+       status: 'About Half',
+       message: 'Buy in a week'
+   },
+   {
+       item_name: 'Detergent',
+       pull_class: 'widget-icon orange pull-left',
+       widget_class: 'fa fa-tint',
+       percent_left: '91.2',
+       label_class: 'label label-success',
+       color_code: {
+       	color: '#5CB85C'
+       },
+       weight: null,
+       status: 'Plenty',
+       message: 'Buy in a couple of months'
+   },
+]);
 	}).service('httpHandler', ['$http', function($http){
 		this.request = function(UrlToQuery, Data) {
 			return $http({
@@ -35,10 +102,15 @@ module('app', ['ui.bootstrap', 'chart.js'])
 				headers: { 'Content-Type': 'application/json;charset=utf-8' }
 			});
 		}
-	}]).factory('indexFactory', ['httpHandler', 'getUserItems', function(httpHandler, getUserItems){
+	}]).factory('indexFactory', ['httpHandler', 'getUserItems', 'getItemByUPC', function(httpHandler, getUserItems, getItemByUPC){
 		return {
 			UserItems: function() {
 				return httpHandler.request(getUserItems, {});
+			},
+			UPCDetails: function(upc) {
+				return httpHandler.request(getItemByUPC, {
+					upc: upc
+				});
 			}
 		}
 	}]).directive("rdWidget", function() {
@@ -106,9 +178,11 @@ module('app', ['ui.bootstrap', 'chart.js'])
                 restrict:"E"
         };
         return e
-    }).controller('controller', ['$scope', 'indexFactory', 'MessagesSet', 'GraphData', function($scope, indexFactory, MessagesSet, GraphData){
+    }).controller('controller', ['$scope', 'indexFactory', 'MessagesSet', '$interval', 'GraphData', 'Items', function($scope, indexFactory, MessagesSet, $interval, GraphData, Items){
     	$scope.data = {};
     	$scope.data.messages = MessagesSet;
+    	$scope.data.items = Items;
+
 		$scope.toggle = true;
 
 		$scope.data.dataset = GraphData.data;
@@ -122,16 +196,94 @@ module('app', ['ui.bootstrap', 'chart.js'])
 			$scope.toggle = !$scope.toggle;
 		}
 
-		$scope.getUserItems = function() {
+		//First get the initial commmit
+
+		// indexFactory.UserItems().then(function(successResponse) {
+		// 	console.log(successResponse);
+		// 	for (var i = 0; i < successResponse.data.length; i++) {
+		// 		var upc_id = successResponse.data[i].upc;
+		// 		indexFactory.UPCDetails(upc_id).then(function(successResponse) {
+		// 			console.log(successResponse);
+		// 			for (var i = 0; i < successResponse.data.length; i++) {
+		// 				$scope.data.items.push({
+		// 					item_name: successResponse.data.item_name,
+		// 					widget_class: 'fa fa-cutlery',
+		// 					label_class: 'label label-success',
+		// 					percent_left: 100,
+		// 					status: 'Plenty',
+		// 					message: 'Buy next month',
+		// 					pull_class: 'widget-icon purple pull-left'
+		// 				});
+		// 			}
+		// 		}, function(errorResponse) {
+		// 			console.log(errorResponse);
+		// 		});
+		// 	}
+		// }, function(errorResponse) {
+		// 	console.log(errorResponse);
+		// });
+
+		$scope.updateCurrentSelected = function() {
+			function getRandomArbitrary(min, max) {
+    			return Math.random() * (max - min) + min;
+			}
+			$scope.currentSelectedItem = {};
+			$scope.currentSelectedItem.currentUsage = getRandomArbitrary(0, 1);
+		}
+
+		function getUserItems() {
+			console.log('querried');
 			indexFactory.UserItems().then(function(successResponse) {
-				$scope.user = {
-					items: successResponse.data
-				};
+				console.log(successResponse);
+				//First we need to get all the unique items
+				var objectArray = {};
+				for (var i = 0; i < successResponse.data.length; i++) {
+					objectArray[successResponse.data[i].upc] = '';
+				}
+				console.log(objectArray);
+				var objectsToAdd = [];
+
+				function inItems(upc_id) {
+					for (var i = 0; i < $scope.data.items.length; i++) {
+						if ($scope.data.items[i].upc == upc_id) {
+							return true;
+						}
+					}
+					return false;
+				}
+
+				angular.forEach(objectArray, function(value, key) {
+					if (!inItems(key)) {
+						this.push(key);
+					}
+				}, objectsToAdd);
+
+				console.log(objectsToAdd);
+
+				for (var i = 0; i < objectsToAdd.length; i++) {
+					console.log(objectsToAdd[i]);
+					indexFactory.UPCDetails(objectsToAdd[i]).then(function(successResponse) {
+						console.log(successResponse);
+						$scope.data.items.push({
+							upc: successResponse.data.upc,
+							item_name: successResponse.data.item_name,
+							percent_left: 100,
+							color:{
+								color_code: '#5CB85C'
+							},
+							widget_class: 'fa fa-leaf',
+							pull_class: 'widget-icon purple pull-left'
+						});
+						$scope.data.dataset[0][$scope.data.dataset[0].length - 1] += 5;
+					}, function(errorResponse) {
+						console.log(errorResponse);
+					})
+				}
 			}, function(errorResponse) {
 				console.log(errorResponse);
-			})
+			});
 		}
-		$scope.getUserItems();
+		var promise = $interval(getUserItems, 3000);
 
 		$scope.close = function(messageID) {
 			for (var i = 0; i < $scope.data.messages.length; i++) {

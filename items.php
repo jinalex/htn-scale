@@ -25,7 +25,7 @@ require_once 'autoload.php';
     <!-- endbuild -->
     <link rel="stylesheet" href="/hackthenorth/bower_components/fullcalendar/dist/fullcalendar.css"/>
     <!-- Custom Fonts -->
-    <link href="/hackthenorth/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="/hackthenorth/css/font-awesome-4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <!-- jQuery -->
     <script src="/hackthenorth/bower_components/jquery/dist/jquery.min.js"></script>
     <script src="/hackthenorth/bower_components/ngDialog/js/ngDialog.js"></script>
@@ -81,45 +81,9 @@ require_once 'autoload.php';
                 <div ui-view>
                     <div class="row">
                         <div class="col-lg-6">
-                            <rd-widget>
-                                <rd-widget-header title="Expenses">
-                                </rd-widget-header>
-                                <rd-widget-body>
-                                    <canvas id="line" class="chart chart-line" chart-data="data.dataset"
-                                    chart-labels="data.labels" chart-legend="true" chart-series="data.series"
-                                    chart-click="onClick" >
-                                    </canvas> 
-                                </rd-widget-body>
-                            </rd-widget>
-                        </div>
-<!--                         <div class="col-lg-12">
-                            <rd-widget>
-                                <rd-widget-body>
-                                  
-                                        <div class="col-lg-3">
-                                            <span class="label label-danger">Almost None</span>
-                                             - Out by end of today
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <span class="label label-warning">Low</span>
-                                             - Out within 2 days
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <span class="label label-info">About halfway
-                                            </span> - Out within a week
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <span class="label label-success">Lots</span>
-                                             - Out within a month   
-                                        </div>
-                                    </div>
-                                </rd-widget-body>
-                            </rd-widget>
-                        </div> -->
-                        <div class="col-lg-6">
                             <div class="col-lg-12" style="margin-bottom:10px;">
                                 <rd-widget>
-                                    <rd-widget-header title="Your Items">
+                                    <rd-widget-header title="Your Tracked Items">
                                     </rd-widget-header style="margin-bottom:10px;">
                                     <rd-widget-body>
                                         <div class="widget-icon red pull-left">
@@ -136,24 +100,26 @@ require_once 'autoload.php';
                                     </rd-widget-body>
                                 </rd-widget>
                             </div>
-                            <div class="col-lg-12" style="margin-bottom:10px;">
+                            <div class="col-lg-12" style="margin-bottom:10px;" ng-repeat="item in data.items">
                                 <rd-widget>
                                     <rd-widget-body>
-                                        <div class="widget-icon blue pull-left">
-                                            <i class="fa fa-shopping-cart"></i>
+                                        <div ng-class="item.pull_class">
+                                            <i ng-class="item.widget_class"></i>
                                         </div>
-                                        <div class="title" style="display:inline-block;">Milk <small style="font-size:12px;">(8.5% left)</div>
-                                        <span class="label label-warning" style="float:right;">Low</span>
+                                        <div class="title" style="display:inline-block;" tooltip="{{item.item_name}}">{{item.item_name | limitTo:12}}<span ng-show="item.item_name.length > 12">...</span><small style="font-size:12px;">({{item.percent_left}}% left)</div>
+                                        <span ng-class="item.label_class" style="float:right;">{{item.status}}</span>
                                         <div class="comment">
-                                            <span style="color:#F0AD4E;">
-                                                Low</span> - 
+                                            <span ng-style="item.color_code">
+                                                {{item.status}}</span> - 
                                             Buy within the next 3 day(s)
-                                            <a ng-href="item.php" style="float:right;">View More <i class="fa fa-chevron-right"></i></a>
+                                            <a href ng-click="updateCurrentSelected()" style="float:right;">View More <i class="fa fa-chevron-right"></i></a>
+                                            <br/><br/>
+                                            <a ng-href="http://www.amazon.com/s/ref=nb_sb_noss_2?url=search-alias%3Daps&field-keywords={{item.item_name}}"><i class="fa fa-amazon"></i> Buy Now Amazon</a>
                                         </div>
                                     </rd-widget-body>
                                 </rd-widget>
                             </div>
-                            <div class="col-lg-12" style="margin-bottom:10px;">
+ <!--                            <div class="col-lg-12" style="margin-bottom:10px;">
                                 <rd-widget>
                                     <rd-widget-body>
                                         <div class="widget-icon blue pull-left">
@@ -271,8 +237,62 @@ require_once 'autoload.php';
                                         </div>
                                     </rd-widget-body>
                                 </rd-widget>
-                            </div>
+                            </ -->
                         </div>
+                        <div class="col-lg-6" ng-show="currentSelectedItem">
+                            <rd-widget>
+                                <rd-widget-header title="{{currentSelectedItem}}">
+                                    <a href ng-click="currentSelectedItem == null">Cancel</a>
+                                </rd-widget-header>
+                                <rd-widget-body>
+                                    <div class="mesasge">
+                                        <div class="col-lg-3">
+                                            <strong>Average Percentage: {{currentSelectedItem.currentUsage}} </strong>
+                                        </div>
+                                    </div>
+                                    <canvas id="line" class="chart chart-line" chart-data="data.dataset"
+                                    chart-labels="data.labels" chart-legend="true" chart-series="data.series"
+                                    chart-click="onClick" height="150px">
+                                    </canvas> 
+                                </rd-widget-body>
+                            </rd-widget>
+                        </div>
+                        <div class="col-lg-6">
+                            <rd-widget>
+                                <rd-widget-header title="Basket of Goods">
+                                </rd-widget-header>
+                                <rd-widget-body>
+                                    <canvas id="line" class="chart chart-line" chart-data="data.dataset"
+                                    chart-labels="data.labels" chart-legend="true" chart-series="data.series"
+                                    chart-click="onClick" height="50" width="100">
+                                    </canvas> 
+                                </rd-widget-body>
+                            </rd-widget>
+                        </div>
+<!--                         <div class="col-lg-12">
+                            <rd-widget>
+                                <rd-widget-body>
+                                  
+                                        <div class="col-lg-3">
+                                            <span class="label label-danger">Almost None</span>
+                                             - Out by end of today
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <span class="label label-warning">Low</span>
+                                             - Out within 2 days
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <span class="label label-info">About halfway
+                                            </span> - Out within a week
+                                        </div>
+                                        <div class="col-lg-3">
+                                            <span class="label label-success">Lots</span>
+                                             - Out within a month   
+                                        </div>
+                                    </div>
+                                </rd-widget-body>
+                            </rd-widget>
+                        </div> -->
                     </div>
                 </div>  
             </div><!-- End Page Content -->

@@ -50,10 +50,19 @@ class FirebasePuller {
 		$fireInstance = FirebaseService::fireConnection();
 		$all_data = json_decode($fireInstance->get(FirebaseService::ROOT_PATH));
 		$firebaseStack = new FirebaseCollection();
-		foreach ($all_data as $key=>$item) {
-			$item = FirebaseService::stdClassToArray($item);
-			$item = new FirebaseItem($item);
-			$firebaseStack->push($item);
+		if ($all_data) {
+			foreach ($all_data as $key=>$item) {
+				// $item = FirebaseService::stdClassToArray(array(
+				// 	'upc' => $item->upc)
+				// );
+				$item = new FirebaseItem(array(
+					'upc' => $item->upc)
+				);
+				// $item = new FirebaseItem(array(
+				// 	'upc' => $item)
+				// );
+				$firebaseStack->push($item);
+			}
 		}
 		return $firebaseStack;
 	}

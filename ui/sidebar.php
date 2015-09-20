@@ -15,9 +15,18 @@
         </p>
       </a>
     </div> -->
+    <div>
+      <li class="sidebar-title"><span>Dashboard</span></li> 
+    </div>
+    <li class="sidebar-list">
+      <a href="index.php">Dashboard<span class="menu-icon fa fa-tachometer"></span></a>
+    </li>
     <div> 
       <li class="sidebar-title"><span>Items Profile</span></li>
     </div>
+    <li class="sidebar-list">
+      <a href="camera.php">Add Item<span class="menu-icon fa fa-plus"></span></a>
+    </li>
     <li class="sidebar-list">
       <a href="items.php">My Items<span class="menu-icon fa fa-list"></span></a>
     </li>

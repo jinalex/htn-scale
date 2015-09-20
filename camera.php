@@ -35,6 +35,7 @@ require_once 'autoload.php';
     
     <script src="/hackthenorth/src/vendor/jquery-1.9.0.min.js" type="text/javascript"></script>
     <script src="/hackthenorth/dist/quagga.js" type="text/javascript"></script>
+<script src="https://cdn.firebase.com/js/client/2.2.9/firebase.js"></script>
     <script src="/hackthenorth/live_w_locator.js" type="text/javascript"></script>
 </head>
 <body ng-controller="controller">
@@ -47,23 +48,24 @@ require_once 'autoload.php';
             <div class="page-content">
   </head>
 
-  <body>
-      <header>
-          <div class="headline">
-              <h1>Add Items</h1>
-          </div>
-      </header>
     <section id="container" class="container">
-        <h3>Scan your item</h3>
+        <h3>Scan a barcode.</h3>
         <div class="controls">
             <fieldset class="input-group">
                 <button class="stop">Stop</button>
             </fieldset>
-            <fieldset class="reader-config-group" style="display: none">
+            <fieldset class="reader-config-group">
                 <label>
                     <span>Barcode-Type</span>
                     <select name="decoder_readers">
-                        <option value="upc" selected="selected">UPC</option>
+                        <option value="code_128" selected="selected">Code 128</option>
+                        <option value="code_39">Code 39</option>
+                        <option value="ean">EAN</option>
+                        <option value="ean_8">EAN-8</option>
+                        <option value="upc">UPC</option>
+                        <option value="upc_e">UPC-E</option>
+                        <option value="codabar">Codabar</option>
+                        <option value="i2of5">I2of5</option>
                     </select>
                 </label>
                 <label>
@@ -108,7 +110,6 @@ require_once 'autoload.php';
         <ul class="collector"></ul>
       </div>
       <div id="interactive" class="viewport"></div>
-    </section>
                 <!-- Header Bar -->
                 <div class="row header">
                     <div class="col-xs-12">
@@ -146,139 +147,6 @@ require_once 'autoload.php';
                 </div>
                 <!-- End Header Bar -->
                 <div ui-view>
-                    <div class="row">
-<!--                         <div class="col-lg-12">
-                            <rd-widget>
-                                <rd-widget-body>
-                                  
-                                        <div class="col-lg-3">
-                                            <span class="label label-danger">Almost None</span>
-                                             - Out by end of today
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <span class="label label-warning">Low</span>
-                                             - Out within 2 days
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <span class="label label-info">About halfway
-                                            </span> - Out within a week
-                                        </div>
-                                        <div class="col-lg-3">
-                                            <span class="label label-success">Lots</span>
-                                             - Out within a month   
-                                        </div>
-                                    </div>
-                                </rd-widget-body>
-                            </rd-widget>
-                        </div> -->
-                        <div class="col-lg-6">
-                            <div class="col-lg-12" style="margin-bottom:10px;">
-                                <rd-widget>
-                                    <rd-widget-header title="Items Summary">
-                                    </rd-widget-header style="margin-bottom:10px;">
-                                    <rd-widget-body>
-                                        <div class="widget-icon red pull-left">
-                                            <i class="fa fa-plus-square"></i>
-                                        </div>
-                                        <div class="title" style="display:inline-block;">Advil <small style="font-size:12px;">(2.3% left)</div>
-                                        <span class="label label-danger" style="float:right;">Almost None</span>
-                                        <div class="comment">
-                                            <span style="color:#D9534F;">
-                                                Almost None</span> - 
-                                            Buy by end of <strong>today</strong>
-                                            <a ng-href="item.php" style="float:right;">View More <i class="fa fa-chevron-right"></i></a>
-                                        </div>
-                                    </rd-widget-body>
-                                </rd-widget>
-                            </div>
-                            <div class="col-lg-12" style="margin-bottom:10px;">
-                                <rd-widget>
-                                    <rd-widget-body>
-                                        <div class="widget-icon blue pull-left">
-                                            <i class="fa fa-shopping-cart"></i>
-                                        </div>
-                                        <div class="title" style="display:inline-block;">Milk <small style="font-size:12px;">(8.5% left)</div>
-                                        <span class="label label-warning" style="float:right;">Low</span>
-                                        <div class="comment">
-                                            <span style="color:#F0AD4E;">
-                                                Low</span> - 
-                                            Buy within the next 3 day(s)
-                                            <a ng-href="item.php" style="float:right;">View More <i class="fa fa-chevron-right"></i></a>
-                                        </div>
-                                    </rd-widget-body>
-                                </rd-widget>
-                            </div>
-                            <div class="col-lg-12" style="margin-bottom:10px;">
-                                <rd-widget>
-                                    <rd-widget-body>
-                                        <div class="widget-icon blue pull-left">
-                                            <i class="fa fa-shopping-cart"></i>
-                                        </div>
-                                        <div class="title" style="display:inline-block;">Oranges <small style="font-size:12px;">(10.5% left)</div>
-                                        <span class="label label-warning" style="float:right;">Low</span>
-                                        <div class="comment">
-                                            <span style="color:#F0AD4E;">
-                                                Low</span> - 
-                                            Buy within the next 3 day(s)
-                                            <a ng-href="item.php" style="float:right;">View More <i class="fa fa-chevron-right"></i></a>
-                                        </div>
-                                    </rd-widget-body>
-                                </rd-widget>
-                            </div>
-                            <div class="col-lg-12" style="margin-bottom:10px;">
-                                <rd-widget>
-                                    <rd-widget-body>
-                                        <div class="widget-icon orange pull-left">
-                                            <i class="fa fa-tint"></i>
-                                        </div>
-                                        <div class="title" style="display:inline-block;">Detergent <small style="font-size:12px;">(90.5% left)</div>
-                                        <span class="label label-success" style="float:right;">Lots</span>
-                                        <div class="comment">
-                                            <span style="color:#5CB85C;">
-                                                Lots</span> - 
-                                            Buy next month
-                                            <a ng-href="item.php" style="float:right;">View More <i class="fa fa-chevron-right"></i></a>
-                                        </div>
-                                    </rd-widget-body>
-                                </rd-widget>
-                            </div>
-                            <div class="col-lg-12" style="margin-bottom:10px;">
-                                <rd-widget>
-                                    <rd-widget-body>
-                                        <div class="widget-icon green pull-left">
-                                            <i class="fa fa-glass"></i>
-                                        </div>
-                                        <div class="title" style="display:inline-block;">Soft Drinks <small style="font-size:12px;">(55.5% left)</div>
-                                        <span class="label label-info" style="float:right;">About halfway</span>
-                                        <div class="comment">
-                                            <span style="color:#428BCA;">
-                                                About halfway</span> - 
-                                            Buy in a few weeks
-                                            <a ng-href="item.php" style="float:right;">View More <i class="fa fa-chevron-right"></i></a>
-                                        </div>
-                                    </rd-widget-body>
-                                </rd-widget>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <rd-widget>
-                                <rd-widget-header title="Deals">
-                                </rd-widget-header>
-                                <rd-widget-body>
-                                    <div class="message" ng-repeat="message in data.messages">
-                                        <h4 style="display:inline-block">{{message.message_title}}</h4>
-                                        <a href ng-click="close(message.message_id)">
-                                            <i class="fa fa-times" style="float:right;"></i>
-                                        </a>
-                                        <p>
-                                            {{message.message_text}}
-                                        </p>
-                                        <hr>
-                                    </div>
-                                </rd-widget-body>
-                            </rd-widget>
-                        </div>
-                    </div>
                 </div>  
             </div><!-- End Page Content -->
         </div><!-- End Content Wrapper -->
