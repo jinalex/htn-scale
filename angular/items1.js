@@ -212,10 +212,11 @@ module('app', ['ui.bootstrap', 'chart.js', 'firebase'])
 		$scope.finalizedEventTwo = ['Empty', 'Full']
 
 		ref.on('child_added', function(newValue, oldValue) {
-			console.log(newValue);
+			console.log(newValue.val());
 			console.log($scope.currentEvent);
+			var newChild = newValue.val();
 			if ($scope.currentEvent == 0) {
-				if (newValue.Containers[5].level == 'High') {
+				if (newChild.Containers[5].level == 'High') {
 					$scope.currentEvent = 1;
 					var upc = '060383049645';
 					indexFactory.UPCDetails(upc).then(function(successResponse) {
@@ -246,10 +247,10 @@ module('app', ['ui.bootstrap', 'chart.js', 'firebase'])
 					$scope.currentEvent = 3;
 				}
 				else {
-					if (newValue.Containers[5].level == 'Empty') {
+					if (newChild.Containers[5].level == 'Empty') {
 						$scope.currentEventTwo.push('Empty');
 					}
-					else if (newValue.Containers[5].level == 'Full') {
+					else if (newChild.Containers[5].level == 'Full') {
 						$scope.currentEventTwo.push('Full');
 					}
 				}
