@@ -10,33 +10,33 @@ require_once 'autoload.php';
     <title>Item Tracker</title>
     <!-- STYLES -->
     <!-- build:css lib/css/main.min.css -->
-    <link rel="stylesheet" type="text/css" href="/hackthenorth/bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="/hackthenorth/bower_components/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="/hackthenorth/bower_components/rdash-ui/dist/css/rdash.min.css">
-    <link rel="stylesheet" type="text/css" href="/hackthenorth/css/index.css">
+    <link rel="stylesheet" type="text/css" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/bower_components/rdash-ui/dist/css/rdash.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
     <!-- endbuild -->
     <!-- SCRIPTS -->
     <!-- build:js lib/js/main.min.js -->
-    <script type="text/javascript" src="/hackthenorth/bower_components/angular/angular.min.js"></script>
-    <script type="text/javascript" src="/hackthenorth/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-    <script type="text/javascript" src="/hackthenorth/bower_components/angular-cookies/angular-cookies.min.js"></script>
-    <script type="text/javascript" src="/hackthenorth/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script type="text/javascript" src="/bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script type="text/javascript" src="/bower_components/angular-cookies/angular-cookies.min.js"></script>
+    <script type="text/javascript" src="/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
     <!-- endbuild -->
-    <link rel="stylesheet" href="/hackthenorth/bower_components/fullcalendar/dist/fullcalendar.css"/>
+    <link rel="stylesheet" href="/bower_components/fullcalendar/dist/fullcalendar.css"/>
     <!-- Custom Fonts -->
-    <link href="/hackthenorth/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <!-- jQuery -->
-    <script src="/hackthenorth/bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="/hackthenorth/bower_components/ngDialog/js/ngDialog.js"></script>
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/ngDialog/js/ngDialog.js"></script>
     <!-- Custom Scripts -->
-    <script type="text/javascript" src="/hackthenorth/angular/index.js"></script>
+    <script type="text/javascript" src="/angular/index.js"></script>
     <meta name="viewport" content="width=device-width; initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="/hackthenorth/css/styles.css" />
+    <link rel="stylesheet" type="text/css" href="/css/styles.css" />
     
-    <script src="/hackthenorth/src/vendor/jquery-1.9.0.min.js" type="text/javascript"></script>
-    <script src="/hackthenorth/dist/quagga.js" type="text/javascript"></script>
+    <script src="/src/vendor/jquery-1.9.0.min.js" type="text/javascript"></script>
+    <script src="/dist/quagga.js" type="text/javascript"></script>
 <script src="https://cdn.firebase.com/js/client/2.2.9/firebase.js"></script>
-    <script src="/hackthenorth/live_w_locator.js" type="text/javascript"></script>
+    <script src="/live_w_locator.js" type="text/javascript"></script>
 </head>
 <body ng-controller="controller">
     <div id="page-wrapper" ng-class="{'open': toggle}" ng-cloak>
