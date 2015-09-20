@@ -216,7 +216,7 @@ module('app', ['ui.bootstrap', 'chart.js', 'firebase'])
 			newValue = newValue.val();
 			console.log(newValue);
 			if ($scope.currentEvent == 0) {
-				if (newValue.Containers[5].level == 'High') {
+				if (newValue.Containers[5].level == 'Full') {
 					$scope.currentEvent = 1;
 				}
 			}
