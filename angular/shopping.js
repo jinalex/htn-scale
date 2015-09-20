@@ -213,6 +213,7 @@ module('app', ['ui.bootstrap', 'chart.js', 'firebase'])
 
 		ref.on('child_added', function(newValue, oldValue) {
 			console.log($scope.currentEvent);
+			console.log(newValue);
 			if ($scope.currentEvent == 0) {
 				if (newValue.Containers[5].level == 'High') {
 					$scope.currentEvent = 1;
