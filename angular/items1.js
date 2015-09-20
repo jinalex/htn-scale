@@ -248,6 +248,7 @@ module('app', ['ui.bootstrap', 'chart.js'])
 
 		function getEvents(waitEvent) {
 			var deferred = $q.defer();
+			console.log('waiting for ' + waitEvent);
 			$interval(function() {
 				indexFactory.CurrentEvents().then(function(successResponse) {
 					if (successResponse.data.length == waitEvent) {
