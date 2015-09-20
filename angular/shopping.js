@@ -222,6 +222,7 @@ module('app', ['ui.bootstrap', 'chart.js', 'firebase'])
 					break;
 				case 4:
 					PushBullet.APIKey = "kTpalu5VMkDRuWu9UpIDBfMedzJIrg1h";
+					$scope.data.cookies = true;
 					$scope.data.items.push({
 						item_name: 'Chocolate Chip Cookies',
 						label_class: 'label label-warning',
