@@ -1,6 +1,6 @@
 <ul class="dropdown-menu dropdown-menu-right">
     <li class="dropdown-header">
-        Project 118
+        Sparrow
     </li>
     <li class="divider"></li>
     <li class="link">
