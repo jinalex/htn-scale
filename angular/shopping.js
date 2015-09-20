@@ -222,7 +222,7 @@ module('app', ['ui.bootstrap', 'chart.js', 'firebase'])
 			}
 			if ($scope.currentEvent == 1) {
 				console.log($scope.currentEventTwo);
-				if ($scope.currentEventTwo == $scope.finalizedEventTwo) {
+				if (($scope.currentEventTwo.indexOf('Empty') != -1) && ($scope.currentEventTwo.indexOf('Low') != -1)) {
 					$scope.currentEvent = 3;
 				}
 				else {

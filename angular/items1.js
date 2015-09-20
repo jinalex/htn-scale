@@ -243,8 +243,8 @@ module('app', ['ui.bootstrap', 'chart.js', 'firebase'])
 				}
 			}
 			if ($scope.currentEvent == 1) {
-				console.log(newValue);
-				if ($scope.currentEventTwo == $scope.finalizedEventTwo) {
+				console.log($scope.currentEventTwo);
+				if (($scope.currentEventTwo.indexOf('Empty') != -1) && ($scope.currentEventTwo.indexOf('Low') != -1)) {
 					$scope.currentEvent = 3;
 				}
 				else {
