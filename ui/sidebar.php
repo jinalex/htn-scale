@@ -3,7 +3,7 @@
   <ul class="sidebar">
     <li class="sidebar-main">
     <a ng-click="toggleSidebar()">
-          Project 118
+          Sparrow
         <span class="menu-icon glyphicon glyphicon-transfer"></span>
       </a>
     </li>
