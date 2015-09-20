@@ -22,15 +22,15 @@ require_once 'autoload.php';
     <script type="text/javascript" src="/bower_components/angular-cookies/angular-cookies.min.js"></script>
     <script type="text/javascript" src="/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
     <!-- endbuild -->
-    <link rel="stylesheet" href="/hackthenorth/bower_components/fullcalendar/dist/fullcalendar.css"/>
+    <link rel="stylesheet" href="/bower_components/fullcalendar/dist/fullcalendar.css"/>
     <!-- Custom Fonts -->
-    <link href="/hackthenorth/css/font-awesome-4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="/css/font-awesome-4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <!-- jQuery -->
-    <script src="/hackthenorth/bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="/hackthenorth/bower_components/ngDialog/js/ngDialog.js"></script>
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/ngDialog/js/ngDialog.js"></script>
     <!-- Custom Scripts -->
-    <script type="text/javascript" src="/hackthenorth/angular/index.js"></script>
-<!--     <link rel="stylesheet" type="text/css" href="/hackthenorth/css/mod_style.css" /> -->
+    <script type="text/javascript" src="/angular/index.js"></script>
+<!--     <link rel="stylesheet" type="text/css" href="/css/mod_style.css" /> -->
 </head>
 <body ng-controller="controller">
     <div id="page-wrapper" ng-class="{'open': toggle}" ng-cloak>
