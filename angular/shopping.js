@@ -211,6 +211,7 @@ module('app', ['ui.bootstrap', 'chart.js', 'firebase'])
 
 		ref.on('child_added', function(newValue, oldValue) {
 			$scope.currentEvent += 1;
+			console.log($scope.currentEvent);
 			switch ($scope.currentEvent) {
 				case 1:
 					break;
