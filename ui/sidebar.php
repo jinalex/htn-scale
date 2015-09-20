@@ -32,18 +32,8 @@
     </li>
   <div class="sidebar-footer">
     <div class="col-xs-4">
-      <a href="https://github.com/kuroware/UoftBaddy" target="_blank">
+      <a href="https://github.com/jinalex/htn-scale" target="_blank">
         Github
-      </a>
-    </div>
-    <div class="col-xs-4">
-      <a href="#" target="_blank">
-        About
-      </a>
-    </div>
-    <div class="col-xs-4">
-      <a href="#">
-        Support
       </a>
     </div>
   </div>
