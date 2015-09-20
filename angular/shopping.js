@@ -209,7 +209,7 @@ module('app', ['ui.bootstrap', 'chart.js', 'firebase'])
 
 		$scope.currentEvent = 0;
 
-		ref.on('child-added', function(newValue, oldValue) {
+		ref.on('child_added', function(newValue, oldValue) {
 			$scope.currentEvent += 1;
 			switch ($scope.currentEvent) {
 				case 1:
