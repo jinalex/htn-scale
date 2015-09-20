@@ -223,7 +223,7 @@ module('app', ['ui.bootstrap', 'chart.js', 'firebase'])
 					var upc = '060383049645';
 					$scope.data.items.push({
 						upc: '060383049645',
-						item_name: successResponse.data.item_name,
+						item_name: "President's Choice Decadent Chocolate Chip Cookies",
 						percent_left: 100,
 						color_code:{
 							color: '#5CB85C'
