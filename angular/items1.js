@@ -288,7 +288,8 @@ module('app', ['ui.bootstrap', 'chart.js'])
 
 				console.log(objectsToAdd);
 
-				getEvents(1).then(function(successResponse){
+				$scope.eventOnePromise = getEvents(1).then(function(successResponse){
+					var $q.defer();
 					console.log('got 1');
 					for (var i = 0; i < objectsToAdd.length; i++) {
 						console.log(objectsToAdd[i]);
@@ -307,31 +308,47 @@ module('app', ['ui.bootstrap', 'chart.js'])
 								label_class: 'label label-success'
 							});
 							$scope.data.dataset[0][$scope.data.dataset[0].length - 1] += 5;
+							$scope.stopIntervalOne();
+							deferred.resolve();
 						}, function(errorResponse) {
 							console.log(errorResponse);
 						})
 					}
+					return deferred.promise;
 				});
 			}, function(errorResponse) {
 				console.log(errorResponse);
 			});
 		}
+
 		var promise = $interval(getUserItems, 3000);
 
-		getEvents(3).then(function(successResponse) {
-			//Weight changed
-			for (var i = 0; i < $scope.data.items.length; i++) {
-				if ($scope.data.items[i].upc == '060383049645') {
-					$scope.data.items[i].color_code = {
-						color: '#D9534F'
-					};
-					$scope.data.items[i].label_class = 'label label-danger';
-					$scope.data.items[i].status = 'Almost None';
-					$scope.data.items[i].percent_left = 4;
-					break;
-				}
-			}
-		})
+		$scope.stopIntervalOne = function() {
+			$interval.cancel(promise);
+		}
+
+		function waitForThree() {
+			getEvents(3).then(function(successResponse) {
+				//Weight changed
+				console.log('got');
+				$scope.eventOnePromise.then(function(successResponse) {
+					for (var i = 0; i < $scope.data.items.length; i++) {
+						if ($scope.data.items[i].upc == '060383049645') {
+							$scope.data.items[i].color_code = {
+								color: '#D9534F'
+							};
+							$scope.data.items[i].label_class = 'label label-danger';
+							$scope.data.items[i].status = 'Almost None';
+							$scope.data.items[i].percent_left = 4;
+							break;
+						}
+					}
+				});
+
+			});
+		}
+		var promise = $interval(waitForThree, 3000);
+
 
 		$scope.close = function(messageID) {
 			for (var i = 0; i < $scope.data.messages.length; i++) {
