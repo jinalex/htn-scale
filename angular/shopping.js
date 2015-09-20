@@ -208,19 +208,31 @@ module('app', ['ui.bootstrap', 'chart.js', 'firebase'])
 		var ref = new Firebase("https://demoitemhtn.firebaseio.com/");
 
 		$scope.currentEvent = 0;
+		$scope.currentEventTwo = [];
+		$scope.finalizedEventTwo = ['Empty', 'Full'];
 
 		ref.on('child_added', function(newValue, oldValue) {
-			$scope.currentEvent += 1;
 			console.log($scope.currentEvent);
-			console.log($scope.currentEvent);
-			switch ($scope.currentEvent) {
-				case 1:
-					break;
-				case 2:
-					break;
-				case 3:
-					break;
-				case 4:
+			if ($scope.currentEvent == 0) {
+				if (newValue.Containers[5].level == 'High') {
+					$scope.currentEvent = 1;
+				}
+			}
+			if ($scope.currentEvent == 1) {
+				console.log(newValue);
+				if ($scope.currentEventTwo == $scope.finalizedEventTwo) {
+					$scope.currentEvent = 3;
+				}
+				else {
+					if (newValue.Containers[5].level == 'Empty') {
+						$scope.currentEventTwo.push('Empty');
+					}
+					else if (newValue.Containers[5].level == 'Full') {
+						$scope.currentEventTwo.push('Full');
+					}
+				}
+			}
+			if ($scope.currentEvent == 3) {
 					PushBullet.APIKey = "kTpalu5VMkDRuWu9UpIDBfMedzJIrg1h";
 					$scope.data.cookies = true;
 					$scope.data.items.push({
@@ -231,10 +243,32 @@ module('app', ['ui.bootstrap', 'chart.js', 'firebase'])
 					});
 					var res = PushBullet.push("note", "ujwlIHtrc3Esjz7O3P0Jl6", null, {title: "Running low on cookies", body: "Buy more by the end of today"});
 					console.log(res);
-					break;
-				default:
-					break;
+
 			}
+			// console.log($scope.currentEvent);
+			// console.log($scope.currentEvent);
+			// switch ($scope.currentEvent) {
+			// 	case 1:
+			// 		break;
+			// 	case 2:
+			// 		break;
+			// 	case 3:
+			// 		break;
+			// 	case 4:
+			// 		PushBullet.APIKey = "kTpalu5VMkDRuWu9UpIDBfMedzJIrg1h";
+			// 		$scope.data.cookies = true;
+			// 		$scope.data.items.push({
+			// 			item_name: 'Chocolate Chip Cookies',
+			// 			label_class: 'label label-warning',
+			// 			percent_left: 2.8,
+			// 			status: 'Almost None'
+			// 		});
+			// 		var res = PushBullet.push("note", "ujwlIHtrc3Esjz7O3P0Jl6", null, {title: "Running low on cookies", body: "Buy more by the end of today"});
+			// 		console.log(res);
+			// 		break;
+			// 	default:
+			// 		break;
+			// }
 		});
 		
 		$scope.toggleSidebar = function() {
