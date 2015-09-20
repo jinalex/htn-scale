@@ -210,13 +210,14 @@ module('app', ['ui.bootstrap', 'chart.js', 'firebase'])
 
 		ref.on('child_added', function(newValue, oldValue) {
 			$scope.currentEvent += 1;
+			console.log($scope.currentEvent);
 			switch ($scope.currentEvent) {
 				case 1:
 					var upc = '060383049645';
 					indexFactory.UPCDetails(upc).then(function(successResponse) {
 						console.log(successResponse);
 						$scope.data.items.push({
-							upc: successResponse.data.upc,
+							upc: '060383049645',
 							item_name: successResponse.data.item_name,
 							percent_left: 100,
 							color_code:{
