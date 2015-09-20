@@ -211,41 +211,46 @@ module('app', ['ui.bootstrap', 'chart.js', 'firebase'])
 		$scope.currentEventTwo = [];
 		$scope.finalizedEventTwo = ['Empty', 'Low'];
 
-		ref.on('child_added', function(newValue, oldValue) {
-			console.log($scope.currentEvent);
-			newValue = newValue.val();
-			console.log(newValue.Containers[5]);
-			if ($scope.currentEvent == 0) {
-				if (newValue.Containers[5].level == 'Low') {
-					$scope.currentEvent = 1;
-				}
-			}
-			if ($scope.currentEvent == 1) {
-				console.log($scope.currentEventTwo);
-				if (($scope.currentEventTwo.indexOf('Empty') != -1) && ($scope.currentEventTwo.indexOf('Low') != -1)) {
-					$scope.currentEvent = 3;
-				}
-				else {
-					if (newValue.Containers[5].level == 'Empty') {
-						$scope.currentEventTwo.push('Empty');
-					}
-					else if (newValue.Containers[5].level == 'Low') {
-						$scope.currentEventTwo.push('Low');
-					}
-				}
-			}
-			if ($scope.currentEvent == 3) {
-					PushBullet.APIKey = "kTpalu5VMkDRuWu9UpIDBfMedzJIrg1h";
-					$scope.data.cookies = true;
-					$scope.data.items.push({
-						item_name: 'Chocolate Chip Cookies',
-						label_class: 'label label-warning',
-						percent_left: 2.8,
-						status: 'Almost None'
-					});
-					var res = PushBullet.push("note", "ujwlIHtrc3Esjz7O3P0Jl6", null, {title: "Running low on cookies", body: "Buy more by the end of today"});
-					console.log(res);
+		$scope.destroyListener = false;
 
+		ref.on('child_added', function(newValue, oldValue) {
+			if (!$scope.destroyListener) {
+				console.log($scope.currentEvent);
+				newValue = newValue.val();
+				console.log(newValue.Containers[5]);
+				if ($scope.currentEvent == 0) {
+					if (newValue.Containers[5].level == 'Low') {
+						$scope.currentEvent = 1;
+					}
+				}
+				if ($scope.currentEvent == 1) {
+					console.log($scope.currentEventTwo);
+					if (($scope.currentEventTwo.indexOf('Empty') != -1) && ($scope.currentEventTwo.indexOf('Low') != -1)) {
+						$scope.currentEvent = 3;
+					}
+					else {
+						if (newValue.Containers[5].level == 'Empty') {
+							$scope.currentEventTwo.push('Empty');
+						}
+						else if (newValue.Containers[5].level == 'Low') {
+							$scope.currentEventTwo.push('Low');
+						}
+					}
+				}
+				if ($scope.currentEvent == 3) {
+						PushBullet.APIKey = "kTpalu5VMkDRuWu9UpIDBfMedzJIrg1h";
+						$scope.data.cookies = true;
+						$scope.data.items.push({
+							item_name: 'Chocolate Chip Cookies',
+							label_class: 'label label-warning',
+							percent_left: 2.8,
+							status: 'Almost None'
+						});
+						var res = PushBullet.push("note", "ujwlIHtrc3Esjz7O3P0Jl6", null, {title: "Running low on cookies", body: "Buy more by the end of today"});
+						console.log(res);
+						$scope.destroyListener = true;
+
+				}
 			}
 			// console.log($scope.currentEvent);
 			// console.log($scope.currentEvent);
